@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <style>
+            .legend-heading {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            {% for category in ["Track type", "Track usage", "Operating sites"] %}
+            <tr class="legend-heading"><td>{{ category }}</td></tr>
+            {% for entry in entries %}
+            {% if entry.properties.group == category %}
+            <tr data-zoom="{{ entry.zoom }}"><td><img src="{{ entry.image }}"></td><td>{{ entry.description }}</td></tr>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+        </table>
+    </body>
+</html>
