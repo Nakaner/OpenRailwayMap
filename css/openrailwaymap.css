@@ -159,3 +159,11 @@ noscript .uk-alert
 	bottom: 0px;
 	top: 0px;
 }
+
+.legendErrorMsg {
+	display: none;
+}
+
+.legendErrorMsgVisible {
+	display: block;
+}

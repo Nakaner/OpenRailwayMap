@@ -213,33 +213,37 @@ function searchRequest(input)
 }
 
 
-$(document).ready(function()
-{
-	$.getJSON("js/config.json", function(config)
-	{
-		var map = new OpenRailwayMap(config);
+document.addEventListener('DOMContentLoaded', function() {
+//$(document).ready(async function()
+//{
+	var map = null;
+	fetch("js/config.json")
+		.then(response => response.json())
+		.then(function(config) {
+			map = new OpenRailwayMap(config);
+			map.init();
 
-		$(".styleSelector").on("click", function()
-		{
-			map.setStyle($(this).data('id'));
-		});
-
-		/*
-		$('#locateButton').on('click', function()
-		{
-			startposition.setPosition();
-		});
-		*/
-
-		$('#searchButton').on('click', function()
-		{
-			searchRequest($('#searchInput').val());
-		});
-
-		$(document).keypress(function(e)
-		{
-			if (e.which == 13)
+			$(".styleSelector").on("click", function()
+			{
+				map.setStyle($(this).data('id'));
+			});
+		
+			/*
+			$('#locateButton').on('click', function()
+			{
+				startposition.setPosition();
+			});
+			*/
+		
+			$('#searchButton').on('click', function()
+			{
 				searchRequest($('#searchInput').val());
+			});
+		
+			$(document).keypress(function(e)
+			{
+				if (e.which == 13)
+					searchRequest($('#searchInput').val());
+			});
 		});
-	});
 });
