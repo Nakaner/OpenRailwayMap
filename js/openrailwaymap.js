@@ -5,6 +5,13 @@ This is free software, and you are welcome to redistribute it under certain cond
 See http://wiki.openstreetmap.org/wiki/OpenRailwayMap for details.
 */
 
+function fetchToJSON(response) {
+	if (response.ok) {
+		return response.json();
+	}
+	throw Error(response.statusText);
+}
+
 
 OpenRailwayMap = function(config)
 {
@@ -39,20 +46,22 @@ OpenRailwayMap.prototype =
 		var self = this;
 		var response = null;
 		await fetch('locales/'+this.lang+'.json')
-			.then(response => response.json())
+			.then(fetchToJSON)
 			.then(function(data) {
 				self.translate(self, data);
-			});
+			})
+                        .catch(self.dummyTranlsate);
 		translations = self.language.translations;
 		// language selector
 		$('ul.langSelection').on('click', 'a', function()
 		{
 			self.lang = $(this).data('lang');
-			fetch('locales/'+this.lang+'.json')
-				.then(r => r.json())
+			fetch('locales/' + self.lang + '.json')
+				.then(fetchToJSON)
 				.then(function(data) {
 					self.translate(self, data);
-				});
+				})
+                                .catch(self.dummyTranslate);
 		});
 
 		this.map = new L.Map(this.mapContainerId);
@@ -278,6 +287,19 @@ OpenRailwayMap.prototype =
 				$($(this).children()[0]).addClass('uk-icon-check');
 				return;
 		});
+	},
+
+	/**
+	 * Fallback translation method if the requested language could not be downloaded.
+	 */
+	dummyTranslate: function()
+	{
+		console.error('Failed to download locale, falling back to default language.');
+		var stringsToTranslate = $("[data-i18n]");
+		for (var i=0; i < stringsToTranslate.length; ++i)
+		{
+			stringsToTranslate[i].textContent = $(stringsToTranslate[i]).data('i18n');
+		}
 	},
 
 	replaceStringsByTranslations: function(self)
