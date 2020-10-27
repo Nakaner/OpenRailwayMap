@@ -110,16 +110,19 @@ OpenRailwayMap.prototype =
 			maxZoom: 17
 		});
 
+                console.log(translations);
 		this.baseLayers = {};
-		this.baseLayers[translations['mapnik']] = this.mapnik;
-		this.baseLayers[translations['mapnikGrayscale']] = this.mapnikGray;
-		this.baseLayers[translations['blank']] = this.blank;
+		this.baseLayers[self.translateString(self, 'Mapnik')] = this.mapnik;
+		this.baseLayers[self.translateString(self, 'Mapnik Grayscale')] = this.mapnikGray;
+		this.baseLayers[self.translateString(self, 'blank')] = this.blank;
 
 		this.overlays = {};
-		this.overlays[translations['hillshading']] = this.hillshading;
-		this.overlays[translations['railmap']] = this.railmap;
+		this.overlays[self.translateString(self, 'Hillshading')] = this.hillshading;
+		this.overlays['OpenRailwayMap'] = this.railmap;
 
 		var scaleLine = new L.Control.Scale({metric: true, maxWidth: 200}).addTo(this.map);
+                console.log(this.baseLayers);
+                console.log(this.overlays);
 		var layerSwitch = new L.Control.Layers(this.baseLayers, this.overlays);
 		this.map.addControl(layerSwitch);
 
