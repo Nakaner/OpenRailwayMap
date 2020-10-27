@@ -153,11 +153,13 @@ noscript .uk-alert
 #mapContainer
 {
 	z-index: -1000;
-	position: absolute;
+	position: fixed;
 	left: 0px;
 	right: 0px;
 	bottom: 0px;
-	top: 0px;
+	top: 42px;
+	height: calc(100% - 42px);
+	width: 100%;
 }
 
 .legendErrorMsg {
@@ -166,4 +168,8 @@ noscript .uk-alert
 
 .legendErrorMsgVisible {
 	display: block;
+}
+
+nav.uk-navbar {
+	height: 42px;
 }
