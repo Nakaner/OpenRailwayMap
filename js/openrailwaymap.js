@@ -75,7 +75,7 @@ OpenRailwayMap.prototype =
 
 		this.railmap = new L.TileLayer(this.tileUrl+this.availableStyles[0]+'/{z}/{x}/{y}.png',
 		{
-			attribution: translations['railmapAttribution'],
+			attribution: self.translateString(self, 'Rendering: OpenRailwayMap'),
 			minZoom: 2,
 			maxZoom: 19,
 			tileSize: 256
@@ -84,7 +84,7 @@ OpenRailwayMap.prototype =
 		// grayscale mapnik background layer
 		this.mapnikGray = new L.TileLayer.Grayscale('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 		{
-			attribution: translations['mapnikAttribution'],
+			attribution: self.translateString(self, 'Map data &copy; OpenStreetMap contributors'),
 			maxZoom: 19,
 			code: 'mapnikgray'
 		});
@@ -92,7 +92,7 @@ OpenRailwayMap.prototype =
 		// normal mapnik background layer
 		this.mapnik = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 		{
-			attribution: translations['mapnikAttribution'],
+			attribution: self.translateString(self, 'Map data &copy; OpenStreetMap contributors'),
 			maxZoom: 19,
 			code: 'mapnik'
 		});
@@ -106,11 +106,10 @@ OpenRailwayMap.prototype =
 
 		this.hillshading = new L.TileLayer('http://{s}.tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png',
 		{
-			attribution: translations['hillshadingAttribution'],
+			attribution: self.translateString(self, "Hillshading by <a href='http://nasa.gov/'>NASA SRTM</a>"),
 			maxZoom: 17
 		});
 
-                console.log(translations);
 		this.baseLayers = {};
 		this.baseLayers[self.translateString(self, 'Mapnik')] = this.mapnik;
 		this.baseLayers[self.translateString(self, 'Mapnik Grayscale')] = this.mapnikGray;
