@@ -49,7 +49,7 @@ OpenRailwayMap.prototype =
 		{
 			self.lang = $(this).data('lang');
 			fetch('locales/'+this.lang+'.json')
-				.then(r => r.json)
+				.then(r => r.json())
 				.then(function(data) {
 					self.translate(self, data);
 				});
@@ -269,7 +269,7 @@ OpenRailwayMap.prototype =
 	{
 		var baseurl = window.location.origin + window.location.pathname.replace('index.html', '');
 		self.language = data;
-		self.replaceStringsByTranslations();
+		self.replaceStringsByTranslations(self);
 
 		$('ul.langSelection a i').removeClass('uk-icon-check');
 		$('ul.langSelection a').each(function(index, element)
@@ -280,21 +280,21 @@ OpenRailwayMap.prototype =
 		});
 	},
 
-	replaceStringsByTranslations: function()
+	replaceStringsByTranslations: function(self)
 	{
 		var stringsToTranslate = $("[data-i18n]");
 
 		for (var i=0; i<stringsToTranslate.length; i++)
 		{
 			var originalText = $(stringsToTranslate[i]).data('i18n');
-			var translatedText = this.translateString(originalText);
+			var translatedText = self.translateString(self, originalText);
 			stringsToTranslate[i].innerHTML = translatedText;
 		}
 	},
 
-	translateString: function(text, n)
+	translateString: function(self, text, n)
 	{
-		var translation = this.language.translations[text];
+		var translation = self.language.translations[text];
 
 		if (!n && typeof translation == 'object')
 			return translation[0];
@@ -352,7 +352,7 @@ OpenRailwayMap.prototype =
 		{
 			var errorMsgP = document.querySelector('#legendErrorMsg');
 			errorMsgP.classList.add('legendErrorMsgVisible');
-			errorMsgP.textContent = self.translateString('Nothing to see in this zoom level. Please zoom in.');
+			errorMsgP.textContent = self.translateString(self, 'Nothing to see in this zoom level. Please zoom in.');
 			return;
 		}
 		// Get groups of legend items
@@ -368,7 +368,7 @@ OpenRailwayMap.prototype =
 			legendItems.forEach(function(e) {
 				var clone = template.content.cloneNode(true).querySelector('.legend-row');
 				clone.querySelector('.legend-icon-cell img').src = imagePath + e.image;
-				clone.querySelector('.legend-text-cell').textContent = self.translateString(e.description);
+				clone.querySelector('.legend-text-cell').textContent = self.translateString(self, e.description);
 				legendTable.appendChild(clone);
 			});
 		});
@@ -396,7 +396,7 @@ OpenRailwayMap.prototype =
 		{
 			var errorMsgP = document.querySelector('#legendErrorMsg');
 			errorMsgP.classList.add('legendErrorMsgVisible');
-			errorMsgP.textContent = self.translateString('Legend not available for this style.');
+			errorMsgP.textContent = self.translateString(self, 'Legend not available for this style.');
 		});
 	}
 };
