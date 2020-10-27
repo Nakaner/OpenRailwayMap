@@ -5,6 +5,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 See http://wiki.openstreetmap.org/wiki/OpenRailwayMap for details.
 */
 
+'use strict';
 
 // set start position by given coordinate or, if possible, by geolocation api
 function Startposition(map)

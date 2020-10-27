@@ -5,6 +5,8 @@ This is free software, and you are welcome to redistribute it under certain cond
 See http://wiki.openstreetmap.org/wiki/OpenRailwayMap for details.
 */
 
+'use strict';
+
 function fetchToJSON(response) {
 	if (response.ok) {
 		return response.json();
@@ -13,7 +15,7 @@ function fetchToJSON(response) {
 }
 
 
-OpenRailwayMap = function(config)
+var OpenRailwayMap = function(config)
 {
 	var self = this;
 
@@ -51,7 +53,7 @@ OpenRailwayMap.prototype =
 				self.translate(self, data);
 			})
                         .catch(self.dummyTranlsate);
-		translations = self.language.translations;
+		var translations = self.language.translations;
 		// language selector
 		$('ul.langSelection').on('click', 'a', function()
 		{
